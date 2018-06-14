@@ -1,0 +1,31 @@
+{% load img_tags %}
+{% load widget_tweaks %}
+{% load avatar_tags %}
+
+{% avatar user %} <a href="{% url 'avatar_change' %}">Change your avatar</a>
+{% for field in form %}
+<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+		<span class="text-danger small">{{ field.errors }}</span>
+	</div>
+	<div class="row">
+		<label class="control-label col-sm-2">{{ field.label_tag }}</label>
+		<div class="col-sm-10">{{ field }}</div>
+	</div>
+</div>
+{% endfor %}
+{% for field in form2 %}
+<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+		<span class="text-danger small">{{ field.errors }}</span>
+	</div>
+	<div class="row">
+		<label class="control-label col-sm-2">{{ field.label_tag }}</label>
+		 {% if field.field|get_type == "django.forms.fields.ImageField" and field.value %}
+            <br/><img src="{{ field.value.url }}" width="240"></img></br>
+         {% endif %}
+		<div class="col-sm-10">{{ field }}</div>
+	</div>
+</div>
+{% endfor %}
+

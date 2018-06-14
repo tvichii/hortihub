@@ -1,0 +1,15 @@
+<!-- templates/signup.html -->
+{% extends 'hortihome/base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
+  </form>
+</div>
+{% endblock %}

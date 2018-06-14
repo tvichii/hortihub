@@ -1,0 +1,31 @@
+{% extends 'hortihome/base.html' %}
+
+{% block body %}
+{% if messages %}
+<ul class="messages">
+	{% for message in messages %}
+	<li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+<div class="container">
+	<div class="card mx-auto" style="width:400px">
+		<div class="card-body text-center login-sec">
+			<h2>Member Login</h2>
+			<form method="post">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<button type="submit" class="btn btn-success">Sign in</button>
+			</form>
+			<div class="or-seperator"><b>or</b></div>
+			<div><h5>sign in with</h5></div>
+			<a href="{% url 'social:begin' 'github' %}" class="fab fa-github"></a>
+			<a href="" class="fab fa-linkedin"></a>
+			<a href="" class="fab fa-facebook"></a>
+			<a href="" class="fab fa-google-plus"></a>
+			<div><h6>Don't have an account?</h6></div>
+			<a href="{% url 'accounts:signup'%}" class="btn btn-primary">Signup</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

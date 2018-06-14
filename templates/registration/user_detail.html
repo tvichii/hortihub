@@ -1,0 +1,54 @@
+{% extends 'hortihome/base.html' %}
+{% load avatar_tags %}
+
+{% block body %}
+<div class="container-fluid">
+	<div class="col-sm-12 col-md-3">
+		<div class="card">
+			{% avatar prof %} <a href="{% url 'avatar_change' %}">Change your avatar</a>
+			{% csrf_token %}
+			<div>{{ prof.first_name }} {{ prof.last_name}}</div>
+			{{ prof.email }}
+			{% for book in profile %}
+			{{ book.date_of_birth }}
+			{% endfor %}
+			{% with total_followers=prof.followers.count %}
+			<span class="count">
+				<span class="total">{{ total_followers }}</span>
+				follower{{ total_followers|pluralize }}
+    		</span>
+			<a class="follow-btn" href="{% url 'accounts:user_follow' prof.id %}" data-id="{{ prof.id }}" data-action="follow">
+				{% if request.user not in prof.followers.all %}
+				Follow
+				{% else %}
+				Unfollow
+				{% endif %}
+			</a>
+			{% endwith %}
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+
+{% block domready %}
+$('.follow-btn').click(function(e){
+	
+			e.preventDefault();
+			var this_ = $(this)
+			var likeUrl = this_.attr("data-href")
+			$.ajax(
+			{
+				url: likeUrl,
+				method: "GET",
+				data:{},
+				success: function (data){
+					console.log(data)
+				},
+				error: function(data){
+					console.log(error)
+					console.log("error")
+			}
+	}
+	)
+{% endblock %}
