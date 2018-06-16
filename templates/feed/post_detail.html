@@ -1,0 +1,13 @@
+{% extends 'hortihome/base.html' %}
+{% block title %}{{ post.post_body }}{% endblock %}
+
+{% block body %}
+<div class="container">
+	<div class="card">
+		{{ post.post_body }}
+		{% if post.image %}
+		<img src="{{  post.image.url }}"/>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'hortihome/base.html' %}
+{% load img_tags %}
+{% load widget_tweaks %}
+
+{% block title %}{{ userpost }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="col-md-7">
+			<div class="card mx-auto">
+				<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					{% include 'feed/form-template.html' %}
+				</form>
+			</div>
+			<div class="card mx-auto">
+				{% for action in actions %}
+				{% include "actions/action/detail.html" %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

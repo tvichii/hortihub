@@ -21,7 +21,7 @@
 <div class="container-fluid">
 	<nav class="navbar navbar-expand-sm navbar-custom ">
 		<!-- Brand/logo -->
-		<a class="navbar-brand" href=""><h5>HortiHub</h5></a>
+		<a class="navbar-brand" href="{% url 'feed:userfeed' %}"><h5>HortiHub</h5></a>
 		<!-- Links -->
 		{% if user.is_authenticated %}
 		<ul class="navbar-nav ml-auto">

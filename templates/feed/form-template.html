@@ -1,0 +1,29 @@
+{% load img_tags %}
+{% load widget_tweaks %}
+
+{% for field in form %}
+<div class="form-group">
+	<span class="text-danger small">{{ field.errors }}</span>
+	<div>
+		<!--<label class="control-label col-sm-2 ">{{ field.label_tag }}</label>-->
+		{% if field.field|get_type == "CharField" %}
+		<div class="text-center">
+		{% render_field field rows="4" cols="65 " %}
+		</div >
+		{% else %}
+		<div  class="text-right">{{ field }}</div>
+		{% endif %}
+	</div>
+</div>
+{% endfor %}
+<div class="form-group text-right">
+	<button type="submit" class="btn btn-info">Post</button>
+</div>
+
+
+
+
+
+
+
+

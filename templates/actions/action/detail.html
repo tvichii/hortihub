@@ -1,22 +1,15 @@
-
+{% load avatar_tags %}
 
 {% with user=action.user profile=action.user.profile %}
 <div class="action">
-	<div class="images">
-		{% if action.target %}
-			{% with target=action.target %}
-   
-			{% endwith %}
-		{% endif %}
-
-	</div>
 	<div class="info">
-		<p><span class="date">{{ action.created|timesince }} ago</span><br />
+		<p><span class="date">{{ action.created|timesince }} ago</span><br/>
+			{% avatar user %}
 		<a href="{{ user.get_absolute_url }}">{{ user.first_name }}</a>
 		{{ action.verb }}
 		{% if action.target %}
 		    {% with target=action.target %}
-				<a href="">{{ target }}</a>
+				<a href="{{ target.get_absolute_url }}">{{ target }}</a>
 			{% endwith %}
 		{% endif %}
 		</p>

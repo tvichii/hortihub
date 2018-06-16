@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework',
     'accounts',
+    'feed',
     'hortihome',
     'actions'
 ]
@@ -150,7 +151,7 @@ LOGIN_EXEMPT_URLS = (
 )
 
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/feed/userfeed/'
 LOGOUT_REDIRECT_URL = '/'
 
 ABSOLUTE_URL_OVERRIDES = {

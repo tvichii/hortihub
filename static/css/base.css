@@ -2,7 +2,9 @@ body{
     background: white url("/static/img/bg.jpg");
    /* background: red;*/
     background-size: 100%;
-
+}
+html,body{
+    height : 100%;
 }
 
 /*base */
@@ -22,7 +24,9 @@ body{
   margin-right: auto;
   margin-left: auto;
 }
-
+.container{
+ height : 100%;
+}
 /* users */
 #people-list .user {
     width:180px;
@@ -74,3 +78,20 @@ margin:30px; /* outside spacing b/w cards and other components.*/
 
 h6{
 margin-top:15px;}
+
+/* actions */
+.action .date {
+    font-style:italic;
+    color:#ccc;
+}
+
+/* feed view
+.card.feed{
+color:red;
+margin:0px;
+width:400px;
+}
+
+.scroll {
+    overflow-y: auto;
+}*/
