@@ -10,6 +10,9 @@ html,body{
 /*base */
 .navbar-brand{
     font-family: 'Abril+Fatface', cursive, sans-serif;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff2d95, 0 0 30px #ff2d95, 0 0 40px #ff2d95, 0 0 50px #ff2d95, 0 0 75px #ff2d95;
+    /*opacity: 0.3;*/
+    letter-spacing: 3px;
 }
 .navbar-custom { /* Navbar color */
     background-color: #00802b;
@@ -34,7 +37,7 @@ html,body{
     overflow:auto;
     padding:10px;
 }
-#people-list .info { text-align:center; }
+/*#people-list .info { text-align:center; }*/
 img.user-detail {
     border-radius:50%;
     float:left;
@@ -95,3 +98,18 @@ width:400px;
 .scroll {
     overflow-y: auto;
 }*/
+
+.count {
+   /* width:40px;*/
+    width:120px;
+    color:#aaa;
+    border:3px solid #bbb;
+    border-radius:26px;
+    padding:10px 20px;
+    margin:20px 10px 0;
+    display: inline-block;
+}
+.image-info div {
+    padding:20px 0;
+    overflow:auto;
+}

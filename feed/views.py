@@ -6,6 +6,12 @@ from django.views.generic import (TemplateView, ListView,
 from feed.models import UserPost
 from django.urls import reverse_lazy
 from actions.utils import create_action
+import redis
+from django.conf import settings
+
+r = redis.StrictRedis(host=settings.REDIS_HOST,
+                      port=settings.REDIS_PORT,
+                      db=settings.REDIS_DB)
 
 
 # class UserFeedView(ListView):
@@ -40,6 +46,22 @@ class PostDetailView(DetailView):
     context_object_name = 'post'
     template_name = 'feed/post_detail.html'
 
+    def get_context_data(self, **kwargs):
+        try:
+            total_views = r.incr('userpost:{}:views'.format(self.object.pk))
+            kwargs['total_views'] = total_views
+        except (redis.exceptions.ConnectionError,
+                redis.exceptions.BusyLoadingError):
+            pass
+
+        return super(PostDetailView, self).get_context_data(**kwargs)
+
+    def get_success_url(self):
+        try:
+            total_views = r.incr('userpost:{}:views'.format(self.object.pk))
+        except (redis.exceptions.ConnectionError,
+                    redis.exceptions.BusyLoadingError):
+            pass
 
     # # def dashboard(request):
     #     # Display all actions by default
