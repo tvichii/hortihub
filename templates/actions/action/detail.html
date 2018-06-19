@@ -9,7 +9,7 @@
 		{{ action.verb }}
 		{% if action.target %}
 		    {% with target=action.target %}
-				<a href="{{ target.get_absolute_url }}">{{ target }}</a>
+				<a href="{{ target.get_absolute_url }}">{{ target|truncatechars:70 }}</a>
 			{% endwith %}
 		{% endif %}
 		</p>

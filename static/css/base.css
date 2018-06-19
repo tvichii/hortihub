@@ -78,6 +78,11 @@ margin:30px; /* outside spacing b/w cards and other components.*/
 .fa-facebook{ color: #3b5998 }
 .fa-google-plus{ color: #dd4b39 }
 .fa-github{ color: #444444 }
+.heart{ color: #cc3300;
+        background-color:  #008CBA white;
+        border: 2px solid  #4CAF50;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
 
 h6{
 margin-top:15px;}
@@ -113,3 +118,12 @@ width:400px;
     padding:20px 0;
     overflow:auto;
 }
+.post-footer{
+    margin-top:30px;
+}
+
+/*.button:{
+margin:80px 20px;
+padding:10px 20px;
+}
+
