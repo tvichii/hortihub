@@ -14,7 +14,10 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+	<script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
 </head>
 
 <body>
@@ -51,10 +54,8 @@
 
 
 <script>
-$(document).ready(function(){
 {% block domready %}
 {% endblock %}
-});
 </script>
 </body>
 </html>

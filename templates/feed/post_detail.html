@@ -4,6 +4,7 @@
 {% block body %}
 <div class="container">
 	<div class="card">
+		{% csrf_token %}
 		{{ post.post_body }}
 		{% if post.image %}
 		<img src="{{  post.image.url }}"/>
@@ -12,21 +13,50 @@
 	 	<span class="total">{{ total_views }}</span>
 	 		view{{ total_views|pluralize }}
 		</span>
-	<!--<a href="#" data-id="{{ image.id }}" data-action="{% if request.user in users_like %}un{% endif %}like"-->
-	<!--class="like button">-->
-	{% if request.user not in post.likes.all %}
-	Like
-	{% else %}
-	Unlike
-	{% endif %}
-	<!--</a>-->
-	{% for user in post.likes.all %}
-	<div>
-		<p>{{ user.first_name }}</p>
+		<a class="button" data-href="{{ post.get_absolute_url }}">
+			<button>Like</button>
+			Likes: <span id="likes">{{ post.likes.count }}</span>
+		</a>
+		
 	</div>
-	{% empty %}
-	Nobody likes this image yet.
-	{% endfor %}
 </div>
-</div>
+
+
+{% endblock %}
+
+{% block domready %}
+$(document).ready(function() {
+  $("button").click(function(e) {
+    e.preventDefault();
+    var this_ = $(this)
+    var likeUrl = this_.attr("data-href")
+    var csrftoken = getCookie('csrftoken');
+
+    $.ajax({
+      headers: {
+        "X-CSRFToken": csrftoken
+      },
+      url: likeUrl,
+      method: "POST",
+      data: {},
+      success: function(result) {
+        console.log('success');
+        if (result.liked) {
+          var likes = result["likes"]
+          document.getElementById("likes").innerHTML = likes;
+          this_.html("Unlike")
+        } else {
+          var likes = result["likes"]
+          document.getElementById("likes").innerHTML = likes;
+          this_.html("Like")
+        }
+      },
+      error: function(result) {
+        console.log('error');
+      }
+    });
+  });
+});
+
+
 {% endblock %}
