@@ -31,7 +31,7 @@ DATABASES = {
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Why?
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'hortihib/static'),
+    os.path.join(BASE_DIR, 'static'),
 ]
 # STATICFILES_DIRS = [
 #     os.path.normpath(BASE_DIR, 'static'),
