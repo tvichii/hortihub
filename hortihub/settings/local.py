@@ -8,6 +8,15 @@ INSTALLED_APPS += (
 )
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
+# Database
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, config("DB_NAME")),
+    }
+}
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
