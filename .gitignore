@@ -137,3 +137,6 @@ venv.bak/
 # SQLite database files
 
 *.sqlite3
+
+# env file
+.env
