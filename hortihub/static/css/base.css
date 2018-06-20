@@ -1,0 +1,129 @@
+body{
+    background: white url("/static/img/bg.jpg");
+   /* background: red;*/
+    background-size: 100%;
+}
+html,body{
+    height : 100%;
+}
+
+/*base */
+.navbar-brand{
+    font-family: 'Abril+Fatface', cursive, sans-serif;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff2d95, 0 0 30px #ff2d95, 0 0 40px #ff2d95, 0 0 50px #ff2d95, 0 0 75px #ff2d95;
+    /*opacity: 0.3;*/
+    letter-spacing: 3px;
+}
+.navbar-custom { /* Navbar color */
+    background-color: #00802b;
+
+}
+.navbar a{ /* Links color of navbar */
+    color: white !important;
+}
+.container-fluid { /* To remove unneccsary padding around navbar(default:15 px) */
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.container{
+ height : 100%;
+}
+/* users */
+#people-list .user {
+    width:180px;
+    float:left;
+    overflow:auto;
+    padding:10px;
+}
+/*#people-list .info { text-align:center; }*/
+img.user-detail {
+    border-radius:50%;
+    float:left;
+}
+
+/*login*/
+.card{
+padding:20px; /* inside margin kind */
+margin:30px; /* outside spacing b/w cards and other components.*/
+}
+.fab{
+    font-size: 43px;
+    margin-right: 10px;
+}
+.login-sec h2{margin-bottom:30px; font-weight:800; font-size:30px;color: #DE6262;} /**/
+
+ .or-seperator {
+        margin: 45px 0 0px;
+        text-align: center;
+        border-top: 1px solid #e0e0e0;
+    }
+    .or-seperator b {
+        padding: 0 1    0px;
+		width: 40px;
+		height: 40px;
+		font-size: 16px;
+		text-align: center;
+		line-height: 40px;
+		background: #fff;
+		display: inline-block;
+        border: 1px solid #e0e0e0;
+		border-radius: 50%;
+        position: relative;
+        top: -22px;
+        z-index: 1;
+    }
+.fa-linkedin{ color: #007bb6 }
+.fa-facebook{ color: #3b5998 }
+.fa-google-plus{ color: #dd4b39 }
+.fa-github{ color: #444444 }
+.heart{ color: #cc3300;
+        background-color:  #008CBA white;
+        border: 2px solid  #4CAF50;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+
+h6{
+margin-top:15px;}
+
+/* actions */
+.action .date {
+    font-style:italic;
+    color:#ccc;
+}
+
+/* feed view
+.card.feed{
+color:red;
+margin:0px;
+width:400px;
+}
+
+.scroll {
+    overflow-y: auto;
+}*/
+
+.count {
+   /* width:40px;*/
+    width:140px;
+    color:#aaa;
+    border:3px solid #bbb;
+    border-radius:26px;
+    padding:10px 20px;
+    margin:20px 10px 0;
+    display: inline-block;
+}
+.image-info div {
+    padding:20px 0;
+    overflow:auto;
+}
+.post-footer{
+    margin-top:30px;
+}
+
+/*.button:{
+margin:80px 20px;
+padding:10px 20px;
+}
+
