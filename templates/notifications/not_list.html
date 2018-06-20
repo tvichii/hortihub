@@ -1,0 +1,18 @@
+{% extends 'hortihome/base.html' %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block body %}
+<div class="container h-100">
+	<div class="card mx-auto feed h-100 scroll" style="width:600px">
+		{% for not in not_all %}
+		{{ not.user }}
+		{{ not.verb }}
+		{{ not.target }}
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
+
+lkll
+/* id="action-list"*/

@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'accounts',
     'feed',
     'hortihome',
-    'actions'
+    'actions',
+    'notifications'
 ]
 
 MIDDLEWARE = [

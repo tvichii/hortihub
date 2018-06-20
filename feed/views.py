@@ -7,6 +7,7 @@ from django.views.generic import (TemplateView, ListView,
 from feed.models import UserPost
 from django.urls import reverse_lazy
 from actions.utils import create_action
+from notifications.utils import create_notification
 import redis
 from django.conf import settings
 from braces.views import JSONResponseMixin, AjaxResponseMixin
@@ -37,6 +38,7 @@ class CreatePostView(CreateView):
     def get_success_url(self):
         post = UserPost.objects.get(pk=self.object.pk)
         create_action(self.request.user, 'posted', post)
+        create_notification(self.request.user, 'posted', post)
         return reverse_lazy('feed:userfeed')
 
     def form_valid(self, form):
@@ -74,7 +76,6 @@ class PostDetailView(AjaxResponseMixin, DetailView):
 
     def post_ajax(self, request, *args, **kwargs):
         obj = self.get_object()
-        print('ajax')
         liked = False
 
         if request.user in obj.likes.all():
@@ -88,7 +89,7 @@ class PostDetailView(AjaxResponseMixin, DetailView):
             "liked": liked,
             "likes": str(obj.likes.count()),
         }
-        print(response_data["likes"])
+        # print(response_data["likes"])
         # if obj.likes:
         #     response_data = {'result': "enabled"}
         # else:
