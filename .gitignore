@@ -140,3 +140,4 @@ venv.bak/
 
 # env file
 .env
+staticfiles/
