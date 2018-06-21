@@ -38,7 +38,7 @@ class CreatePostView(CreateView):
     def get_success_url(self):
         post = UserPost.objects.get(pk=self.object.pk)
         create_action(self.request.user, 'posted', post)
-        # create_notification(self.request.user, 'posted', post)
+        create_notification(self.request.user, 'posted', post)
         return reverse_lazy('feed:userfeed')
 
     def form_valid(self, form):
