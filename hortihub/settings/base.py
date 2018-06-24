@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'channels',
     'widget_tweaks',
     'avatar',
     'social_django',
@@ -38,7 +39,8 @@ INSTALLED_APPS = [
     'feed',
     'hortihome',
     'actions',
-    'notifications'
+    'notifications',
+
 ]
 
 MIDDLEWARE = [
@@ -98,6 +100,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# REDIS setup
+REDIS_URL = config('REDIS_URL', default=('localhost', 6379))
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "asgi_redis.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [REDIS_URL,],
+#         },
+#         "ROUTING": "notifications.routing.channel_routing",
+#     },
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/

@@ -27,7 +27,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Why?s
 SOCIAL_AUTH_GITHUB_KEY = '5a1923402861bda4eb93'
 SOCIAL_AUTH_GITHUB_SECRET = 'ce9ae60d506f24914b473cb05cbb12ef8803b41a'
 
-
+# ASGI_APPLICATION = 'chatapp.routing.application'
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
