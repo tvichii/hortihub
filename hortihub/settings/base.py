@@ -161,6 +161,10 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.linkedin.LinkedinOAuth2',
+    # 'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
+    # 'social_core.backends.google.GoogleOpenId',  # for Google authentication
+    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'accounts.authentication.EmailAuthBackend',
 )
@@ -171,6 +175,11 @@ SOCIAL_AUTH_GITHUB_SECRET = 'ce9ae60d506f24914b473cb05cbb12ef8803b41a'
 SOCIAL_AUTH_FACEBOOK_KEY = '465322103890630'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '9cf27fb32b2725b613cc096b3d1d85ed'  # App Secret
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='304251380917-d56eb5tmjeqn3p1bqjunhtoebknlqcdn.apps.googleusercontent.com'  #Paste CLient Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'hxD0Tw58SBT-HZdbYbm4JFI4'
+
+SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = '78irpvanrt7f38'
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = 'vtGhcB8PlvAJSMBx'
 
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379

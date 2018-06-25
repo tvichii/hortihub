@@ -20,9 +20,9 @@
 			<div class="or-seperator"><b>or</b></div>
 			<div><h5>sign in with</h5></div>
 			<a href="{% url 'social:begin' 'github' %}" class="fab fa-github"></a>
-			<a href="" class="fab fa-linkedin"></a>
+			<a href="{% url 'social:begin' 'linkedin-oauth2	' %}" class="fab fa-linkedin"></a>
 			<a href="{% url 'social:begin' 'facebook' %}" class="fab fa-facebook"></a>
-			<a href="" class="fab fa-google-plus"></a>
+			<a href="{% url 'social:begin' 'google-oauth2' %}" class="fab fa-google-plus"></a>
 			<div><h6>Don't have an account?</h6></div>
 			<a href="{% url 'accounts:signup'%}" class="btn btn-primary">Signup</a>
 		</div>
