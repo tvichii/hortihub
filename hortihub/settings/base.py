@@ -161,7 +161,10 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
+    # 'social.backends.linkedin.LinkedinOAuth2',
     'social_core.backends.linkedin.LinkedinOAuth2',
+    # 'social.backends.linkedin.LinkedinOAuth2',
+    # 'social_auth.backends.contrib.linkedin.LinkedinBackend',
     # 'social_core.backends.open_id.OpenIdAuth',  # for Google authentication
     # 'social_core.backends.google.GoogleOpenId',  # for Google authentication
     'social_core.backends.google.GoogleOAuth2',
