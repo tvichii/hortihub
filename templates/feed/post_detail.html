@@ -4,26 +4,27 @@
 {% block body %}
 <div class="container">
 	<div class="card">
-		
 		{% csrf_token %}
-		<div class="row">
-			<div class="col-md-10">
 				{{ post.post_body }}
-			</div>
-			<div class="col-md-2">
-		<span class="count text-center">
-	 	<span class="total">{{ total_views }}</span>
-	 		view{{ total_views|pluralize }}
-		</span>
-			</div>
-		</div>
 		{% if post.image %}
 		<img src="{{  post.image.url }}"/>
 		{% endif %}
-
+		
 		<div class="post-footer">
-			<a class="button" data-href="{{ post.get_absolute_url }}">
+			<div class="row countline">
+				<div class="col-md-6">
+			<span class="text-center count">
 				Likes: <span id="likes">{{ post.likes.count }}</span>
+				</span>
+					</div>
+				<div class="col-md-6">
+			<span class="text-center count">
+				view{{ total_views|pluralize }}:
+				<span>{{ total_views }}</span>
+			</span>
+			</div>
+			</div>
+			<a class="button" data-href="{{ post.get_absolute_url }}">
 				<div>
 					{% if request.user not in post.likes.all %}
 					<button class=" btn btn-default fas fa-heart heart">Like</button>

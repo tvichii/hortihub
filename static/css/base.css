@@ -78,9 +78,9 @@ margin:30px; /* outside spacing b/w cards and other components.*/
 .fa-facebook{ color: #3b5998 }
 .fa-google-plus{ color: #dd4b39 }
 .fa-github{ color: #444444 }
-.heart{ color: #cc3300;
-        background-color:  #008CBA white;
-        border: 2px solid  #4CAF50;
+.heart{ color: white;
+        background-color: #4CAF50;
+        border: 2px solid  white;
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
         }
 
@@ -105,14 +105,16 @@ width:400px;
 }*/
 
 .count {
-   /* width:40px;*/
     width:140px;
     color:#aaa;
-    border:3px solid #bbb;
-    border-radius:26px;
-    padding:10px 20px;
-    margin:20px 10px 0;
-    display: inline-block;
+     border:2px solid #bbb;
+ border-radius:26px;
+ padding:3px 0px;
+ margin:5px 0px;
+ display: inline-block;
+}
+.countline{
+ margin:10px 0px;
 }
 .image-info div {
     padding:20px 0;
@@ -122,8 +124,4 @@ width:400px;
     margin-top:30px;
 }
 
-/*.button:{
-margin:80px 20px;
-padding:10px 20px;
-}
 

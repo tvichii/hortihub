@@ -7,10 +7,7 @@ from .models import Profile, Contact
 from .forms import UserForm, ProfileForm
 from django.shortcuts import get_object_or_404
 from django.views.generic import View
-from django.urls import reverse
-from django.http import HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse, JsonResponse
 from actions.utils import create_action
 
 
@@ -31,14 +28,13 @@ class UserListView(generic.ListView):
 
 
 class UserDetail(generic.DetailView):
-    context_object_name = "prof"
+    context_object_name = "person"
     model = User
     template_name = 'registration/user_detail.html'
 
     # pk_url_kwarg = "pk"
 
     def get_context_data(self, **kwargs):
-        # xxx will be available in the template as the related objects
         context = super(UserDetail, self).get_context_data(**kwargs)
         pk = self.kwargs.get('pk')
         try:
