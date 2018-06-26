@@ -5,10 +5,11 @@
 <div class="container">
 	<div class="card">
 		{% csrf_token %}
-				{{ post.post_body }}
+		{{ post.post_body }}
 		{% if post.image %}
 		<img src="{{  post.image.url }}"/>
 		{% endif %}
+		
 		
 		<div class="post-footer">
 			<div class="row countline">
@@ -16,13 +17,13 @@
 			<span class="text-center count">
 				Likes: <span id="likes">{{ post.likes.count }}</span>
 				</span>
-					</div>
+				</div>
 				<div class="col-md-6">
 			<span class="text-center count">
 				view{{ total_views|pluralize }}:
 				<span>{{ total_views }}</span>
 			</span>
-			</div>
+				</div>
 			</div>
 			<a class="button" data-href="{{ post.get_absolute_url }}">
 				<div>
@@ -34,6 +35,19 @@
 				</div>
 			</a>
 		</div>
+	</div>
+	<div class="card">
+		<p>Comments</p>
+		{% for comment in comments %}
+		<section>
+			<blockquote>
+				{{ comment.content }}
+				<footer class="blockquote-footer">{{ comment.user }} | {{ comment.timestamp|timesince }} ago</footer>
+				<hr/>
+			</blockquote>
+		</section>
+		{% endfor %}
+	
 	</div>
 </div>
 

@@ -13,6 +13,7 @@ from django.conf import settings
 from braces.views import JSONResponseMixin, AjaxResponseMixin
 from django.http.response import HttpResponse
 import json
+from comments.models import Comment
 
 r = redis.StrictRedis(host=settings.REDIS_HOST,
                       port=settings.REDIS_PORT,
@@ -53,6 +54,9 @@ class PostDetailView(AjaxResponseMixin, DetailView):
     template_name = 'feed/post_detail.html'
 
     def get_context_data(self, **kwargs):
+        post = UserPost.objects.filter(pk=self.kwargs.get('pk')).first()
+        comments = Comment.objects.filter_by_instance(post)
+        kwargs['comments'] = comments
         try:
             total_views = r.incr('userpost:{}:views'.format(self.object.pk))
             kwargs['total_views'] = total_views

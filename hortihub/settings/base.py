@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework',
     'accounts',
+    'comments',
     'feed',
     'hortihome',
     'actions',
