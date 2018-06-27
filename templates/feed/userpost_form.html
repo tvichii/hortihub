@@ -12,6 +12,9 @@
 				<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
 					{% csrf_token %}
 					{% include 'feed/form-template.html' %}
+					<div class="form-group text-right">
+						<button type="submit" class="btn btn-info">Post</button>
+					</div>
 				</form>
 			</div>
 			<div class="card mx-auto">

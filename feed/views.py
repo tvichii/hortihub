@@ -96,6 +96,7 @@ class PostDetailView(AjaxResponseMixin, UpdateView):
             content=content_data,
             parent = parent_obj,
         )
+        print(created)
         return super(PostDetailView, self).form_valid(form)
 
     def form_invalid(self, form):

@@ -4,72 +4,90 @@
 {% block title %}{{ post.post_body }}{% endblock %}
 
 {% block body %}
-<div class="container">
-	<div class="card">
-		{% csrf_token %}
-		{{ post.post_body }}
-		{% if post.image %}
-		<img src="{{  post.image.url }}"/>
-		{% endif %}
-		
-		<div class="post-footer">
-			<div class="row countline">
-				<div class="col-md-6">
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="col-md-7">
+			<div class="card mx-auto">
+				{% csrf_token %}
+				{{ post.post_body }}
+				{% if post.image %}
+				<img src="{{  post.image.url }}"/>
+				{% endif %}
+				
+				<div class="post-footer">
+					<div class="row countline">
+						<div class="col-md-6">
 			<span class="text-center count">
 				Likes: <span id="likes">{{ post.likes.count }}</span>
 				</span>
-				</div>
-				<div class="col-md-6">
+						</div>
+						<div class="col-md-6">
 			<span class="text-center count">
 				view{{ total_views|pluralize }}:
 				<span>{{ total_views }}</span>
 			</span>
+						</div>
+					</div>
+					<a class="button" data-href="{{ post.get_absolute_url }}">
+						<div>
+							{% if request.user not in post.likes.all %}
+							<button class=" btn btn-default fas fa-heart heart">Like</button>
+							{% else %}
+							<button class=" btn btn-default fas fa-heart heart">UnLike</button>
+							{% endif %}
+						</div>
+					</a>
 				</div>
 			</div>
-			<a class="button" data-href="{{ post.get_absolute_url }}">
-				<div>
-					{% if request.user not in post.likes.all %}
-					<button class=" btn btn-default fas fa-heart heart">Like</button>
-					{% else %}
-					<button class=" btn btn-default fas fa-heart heart">UnLike</button>
-					{% endif %}
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="card">
-		<p>Comments</p>
-		<!-- Comments Form LEAVE A COMMENT -->
-		<form method="post" action="" enctype='multipart/form-data'>
-			{% csrf_token %}
-            {{ form_comment}}
-            <input type='submit' value='Post comment' class='btn btn-default'>
-        </form>
-		
-		{% for comment in post.comments %}
-		<section>
-			<blockquote>
-				{{ comment.content }}
-				<footer class="blockquote-footer">{{ comment.user }} | {{ comment.timestamp|timesince }} ago</footer>
-				<div class='comment-reply'>
-					{% for child_comment in comment.children %}
-					<blockquote>
-						<p>{{ child_comment.content }}</p>
-						<footer class="blockquote-footer"> {{ child_comment.user }} | {{ child_comment.timestamp|timesince}} ago
-						</footer>
-					</blockquote>
-					{% endfor %}
-				</div>
+			<div class="card mx-auto">
+				<p>Comments</p>
+				<!-- Comments Form LEAVE A COMMENT -->
 				<form method="post" action="" enctype='multipart/form-data'>
 					{% csrf_token %}
-					{{ form_comment }}
-					<input type='hidden' name='parent_id' value='{{ comment.pk }}'>
-					<input type='submit' value='Reply' class='btn btn-default'>
+					<!--{{ form_comment}}-->
+					{% include 'feed/form-template.html' %}
+					<input type='submit' value='Post comment' class='btn btn-default float-right'>
 				</form>
-				<hr/>
-			</blockquote>
-		</section>
-		{% endfor %}
+				
+				{% for comment in post.comments %}
+				<div class="media">
+					<section>
+						<blockquote>
+							<div class="media-body">
+								<p class="mt-0">{{ comment.content }}</p>
+								<footer class="blockquote-footer">{{ comment.user }} | {{ comment.timestamp|timesince }} ago | <a class='comment-reply-btn' href='#'>Reply</a>
+								</footer>
+								<div class='comment-reply'>
+									{% for child_comment in comment.children %}
+									<blockquote>
+										<div class="media  mt-{{ forloop.counter|add:'2' }}">
+											<a class="pr-{{ forloop.counter|add:'2' }}" href="#">
+											</a>
+											<div class="media-body">
+												<p>{{ child_comment.content }}</p>
+												<footer class="blockquote-footer"> {{ child_comment.user }} | {{ child_comment.timestamp|timesince}} ago
+												</footer>
+											</div>
+										</div>
+									</blockquote>
+									{% endfor %}
+								
+								<form method="post" action="" enctype='multipart/form-data'>
+									{% csrf_token %}
+									<!--{{ form_comment }}-->
+									{% include 'feed/form-template.html' %}
+									<input type='hidden' name='parent_id' value='{{ comment.pk }}'>
+									<input type='submit' value='Reply' class='btn btn-default float-right'>
+								</form>
+									</div>
+								<hr/>
+							</div>
+						</blockquote>
+					</section>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -107,6 +125,11 @@ $(document).ready(function() {
       }
     });
   });
+
+$(".comment-reply-btn").click(function(event){
+        event.preventDefault();
+        $(this).parent().next(".comment-reply").fadeToggle();
+    })
 });
 
 {% endblock %}

@@ -8,7 +8,7 @@
 		<!--<label class="control-label col-sm-2 ">{{ field.label_tag }}</label>-->
 		{% if field.field|get_type == "CharField" %}
 		<div class="text-center">
-		{% render_field field rows="4" cols="65 " %}
+		{% render_field field rows="4" cols="65" %}
 		</div >
 		{% else %}
 		<div  class="text-right">{{ field }}</div>
@@ -16,9 +16,7 @@
 	</div>
 </div>
 {% endfor %}
-<div class="form-group text-right">
-	<button type="submit" class="btn btn-info">Post</button>
-</div>
+
 
 
 
