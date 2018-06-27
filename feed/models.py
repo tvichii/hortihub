@@ -2,6 +2,8 @@ from django.db import models
 # from django.core.urlresolvers import reverse
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
+from comments.models import Comment
+from django.contrib.contenttypes.models import ContentType
 
 User = get_user_model()
 
@@ -26,3 +28,15 @@ class UserPost(models.Model):
 
     def __str__(self):
         return self.post_body
+
+    @property
+    def comments(self):
+        instance = self
+        qs = Comment.objects.filter_by_instance(instance)
+        return qs
+
+    @property
+    def get_content_type(self):
+        instance = self
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        return content_type

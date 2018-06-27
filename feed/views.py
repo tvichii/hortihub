@@ -1,32 +1,20 @@
-from django.shortcuts import render
 from actions.models import Action
-# from django.views.mixins.ajaxformresponse import AjaxFormResponseMixin
-from django.views.generic import (TemplateView, ListView,
-                                  DetailView, CreateView,
-                                  UpdateView, DeleteView, RedirectView)
+from django.views.generic import (DetailView, CreateView, UpdateView)
 from feed.models import UserPost
 from django.urls import reverse_lazy
 from actions.utils import create_action
-# from notifications.utils import create_notification
 import redis
 from django.conf import settings
 from braces.views import JSONResponseMixin, AjaxResponseMixin
 from django.http.response import HttpResponse
 import json
+from comments.forms import CommentForm
+from django.contrib.contenttypes.models import ContentType
 from comments.models import Comment
 
 r = redis.StrictRedis(host=settings.REDIS_HOST,
                       port=settings.REDIS_PORT,
                       db=settings.REDIS_DB)
-
-
-# class UserFeedView(ListView):
-#     template_name = 'feed/user_feed.html'
-#     context_object_name = 'actions'
-#
-#     def get_queryset(self):
-#         return Action.objects.all()  # .exclude(user=self.request.user)
-
 
 class CreatePostView(CreateView):
     model = UserPost
@@ -47,16 +35,27 @@ class CreatePostView(CreateView):
         return super(CreatePostView, self).form_valid(form)
 
 
-class PostDetailView(AjaxResponseMixin, DetailView):
+class PostDetailView(AjaxResponseMixin, UpdateView):
     model = UserPost
-    fields = ['post_body', 'image']
+    # fields = ['post_body', 'image']
     context_object_name = 'post'
     template_name = 'feed/post_detail.html'
+    form_class = CommentForm
+
+    def get_initial(self):
+        initial_data = super(PostDetailView, self).get_initial()
+        obj = self.get_object()
+        print(obj.get_content_type)
+        initial_data.update({
+            "content_type": obj.get_content_type,
+            "object_id": obj.id
+        })
+        return initial_data
 
     def get_context_data(self, **kwargs):
-        post = UserPost.objects.filter(pk=self.kwargs.get('pk')).first()
-        comments = Comment.objects.filter_by_instance(post)
-        kwargs['comments'] = comments
+        # comment_form = CommentForm
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        kwargs['form_comment'] = context['form']#comment_form
         try:
             total_views = r.incr('userpost:{}:views'.format(self.object.pk))
             kwargs['total_views'] = total_views
@@ -72,11 +71,35 @@ class PostDetailView(AjaxResponseMixin, DetailView):
         except (redis.exceptions.ConnectionError,
                 redis.exceptions.BusyLoadingError):
             pass
+        return reverse_lazy('feed:post_detail', kwargs={'pk': self.object.pk})
 
-    # def post_ajax(self, request, *args, **kwargs):
-    #     data = request.POST.items()  # form data
-    #     ctx = {'hi': 'hello'}
-    #     return self.render_json_response(ctx)
+    def form_valid(self, form):
+        c_type = form.cleaned_data.get("content_type")
+        obj_id = form.cleaned_data.get('object_id')
+        content_data = form.cleaned_data.get("content")
+        parent_obj = None
+        try:
+            parent_id = int(self.request.POST.get("parent_id"))
+        except:
+            parent_id = None
+        print(parent_id)
+
+        if parent_id:
+            parent_qs = Comment.objects.filter(pk=parent_id)
+            if parent_qs.exists() and parent_qs.count() == 1:
+                parent_obj = parent_qs.first()
+
+        new_comment, created = Comment.objects.get_or_create(
+            user=self.request.user,
+            content_type=c_type,
+            object_id=obj_id,
+            content=content_data,
+            parent = parent_obj,
+        )
+        return super(PostDetailView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        print("invalid form")
 
     def post_ajax(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -93,34 +116,7 @@ class PostDetailView(AjaxResponseMixin, DetailView):
             "liked": liked,
             "likes": str(obj.likes.count()),
         }
-        # print(response_data["likes"])
-        # if obj.likes:
-        #     response_data = {'result': "enabled"}
-        # else:
-        #     response_data = {'result': "disabled"}
 
         return HttpResponse(json.dumps(response_data),
                             content_type="application/json")
 
-        # class PostLikeView(AjaxFormResponseMixin, UpdateView):
-        #     # form_class = UpdateAuthorForm
-        #
-        #     def get_object(self, queryset=None):
-        #         return get_object_or_json404(Author, pk=self.kwargs['pk'])
-        #
-        #     def get_context_data(self, context):
-        #         context['success'] = True
-        #         return context
-
-        # # def dashboard(request):
-        #     # Display all actions by default
-        #     actions = Action.objects.all().exclude(user=request.user)
-        #     following_ids = request.user.following.values_list('id', flat=True)
-        #     if following_ids:
-        #         # If user is following others, retrieve only their actions
-        #         actions = actions.filter(user_id__in=following_ids).select_related('user', 'user__profile').prefetch_related(
-        # 'target')
-        #     actions = actions[:10]
-        #
-        #     return render(request, 'account/dashboard.html', {'section': 'dashboard',
-        #                                                       'actions': actions})

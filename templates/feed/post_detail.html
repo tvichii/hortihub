@@ -1,4 +1,6 @@
 {% extends 'hortihome/base.html' %}
+{% load widget_tweaks %}
+
 {% block title %}{{ post.post_body }}{% endblock %}
 
 {% block body %}
@@ -9,7 +11,6 @@
 		{% if post.image %}
 		<img src="{{  post.image.url }}"/>
 		{% endif %}
-		
 		
 		<div class="post-footer">
 			<div class="row countline">
@@ -38,16 +39,37 @@
 	</div>
 	<div class="card">
 		<p>Comments</p>
-		{% for comment in comments %}
+		<!-- Comments Form LEAVE A COMMENT -->
+		<form method="post" action="" enctype='multipart/form-data'>
+			{% csrf_token %}
+            {{ form_comment}}
+            <input type='submit' value='Post comment' class='btn btn-default'>
+        </form>
+		
+		{% for comment in post.comments %}
 		<section>
 			<blockquote>
 				{{ comment.content }}
 				<footer class="blockquote-footer">{{ comment.user }} | {{ comment.timestamp|timesince }} ago</footer>
+				<div class='comment-reply'>
+					{% for child_comment in comment.children %}
+					<blockquote>
+						<p>{{ child_comment.content }}</p>
+						<footer class="blockquote-footer"> {{ child_comment.user }} | {{ child_comment.timestamp|timesince}} ago
+						</footer>
+					</blockquote>
+					{% endfor %}
+				</div>
+				<form method="post" action="" enctype='multipart/form-data'>
+					{% csrf_token %}
+					{{ form_comment }}
+					<input type='hidden' name='parent_id' value='{{ comment.pk }}'>
+					<input type='submit' value='Reply' class='btn btn-default'>
+				</form>
 				<hr/>
 			</blockquote>
 		</section>
 		{% endfor %}
-	
 	</div>
 </div>
 
