@@ -3,44 +3,62 @@
 
 {% block body %}
 <div class="container-fluid">
-<div class="text-center">
-	<div class="col-sm-12 col-md-3">
-		<div class="card">
-			{% avatar person %}
-			{% csrf_token %}
-			<div>{{ person.first_name }} {{ person.last_name}}
-				{{ person.email }}
-				<div>
-					{% for person_data in profile %}
-					{{ person_data.date_of_birth }}
-					{% endfor %}
+		<div class="row">
+			<div class="col-sm-12 col-md-3">
+				<div class="card user-sidebar">
+					{% avatar person %}
+					{% csrf_token %}
+					<div>{{ person.first_name }} {{ person.last_name}}
+						{{ person.email }}
+						<div>
+							{% for person_data in profile %}
+							{{ person_data.date_of_birth }}
+							{% endfor %}
+						</div>
+						{% with total_followers=person.followers.count %}
+						<a class="btn btn-success btn-sm btn-block" style="color:white;"><span>
+					<span>{{ total_followers }}</span>
+					follower{{ total_followers|pluralize }}
+					</span></a>
+						{% if request.user.pk != person.pk %}
+						<a class="btn btn-success btn-sm btn-block buttons follow-btn "
+						   href="{% url 'accounts:user_follow' person.id %}"
+						   data-id="{{ person.id }}"
+						   data-action="follow">
+							{% if request.user not in person.followers.all %}
+							Follow
+							{% else %}
+							Unfollow
+							{% endif %}
+						</a>
+						{% endif %}
+						{% endwith %}
+						{% if request.user.pk == person.pk %}
+						<a class="btn btn-success btn-sm btn-block" href="{% url 'accounts:editprof' request.user.pk %}">Edit your
+							Profile</a>
+						{% endif %}
+					</div>
 				</div>
-				{% with total_followers=person.followers.count %}
-				<a class="btn btn-success btn-sm btn-block" style="color:white;"><span>
-				<span>{{ total_followers }}</span>
-				follower{{ total_followers|pluralize }}
-    			</span></a>
-				{% if request.user.pk != person.pk %}
-				<a class="btn btn-success btn-sm btn-block buttons follow-btn " href="{% url 'accounts:user_follow' person.id %}"
-				   data-id="{{ person.id }}"
-				   data-action="follow">
-					{% if request.user not in person.followers.all %}
-					Follow
-					{% else %}
-					Unfollow
-					{% endif %}
-				</a>
-				{% endif %}
-				{% endwith %}
-				{% if request.user.pk == person.pk %}
-				<a class="btn btn-success btn-sm btn-block" href="{% url 'accounts:editprof' request.user.pk %}">Edit your
-					Profile</a>
-				{% endif %}
 			</div>
+				<div class="col-sm-12 col-md-9">
+					<div class="card">
+						<h5>Timeline</h5>
+						<hr>
+						{% for post in user_posts %}
+						<div class="media">
+							<div class="mr-3">{% avatar person %}</div>
+							<div class="media-body">
+								<a href="{{ post.get_absolute_url }}">{{ post.post_body }}</a>
+						</div>
+						</div>
+						
+						<hr>
+						{% endfor %}
+					</div>
+				</div>
 		</div>
-	</div>
-	</div>
-	{% endblock %}
+</div>
+{% endblock %}
 
 
 {% block domready %}

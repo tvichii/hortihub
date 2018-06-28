@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import View
 from django.core.exceptions import ObjectDoesNotExist
 from actions.utils import create_action
+from feed.models import UserPost
 
 
 class SignUp(generic.CreateView):
@@ -35,10 +36,15 @@ class UserDetail(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(UserDetail, self).get_context_data(**kwargs)
         pk = self.kwargs.get('pk')
+        hi = UserPost.objects.filter(author=User.objects.get(pk=pk))
         try:
             context['profile'] = Profile.objects.filter(user=User.objects.get(pk=pk))
+            hi = UserPost.objects.filter(author=User.objects.get(pk=pk))
+            context['user_posts'] = UserPost.objects.filter(author=User.objects.get(pk=pk))
         except ObjectDoesNotExist:
             pass
+        print(hi)
+        print("hell")
         return context
 
 

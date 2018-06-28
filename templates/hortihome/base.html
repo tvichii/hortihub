@@ -8,46 +8,48 @@
 	<title>{% block title %}HortiHub{% endblock %}</title>
 	<!-- Loads the path to static files -->
 	{% load static %}
-
-	<!--<script src="http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>-->
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>-->
+	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
 </head>
 
 <body>
 <div class="container-fluid">
-	<nav class="navbar navbar-expand-sm navbar-custom ">
+	<nav class="navbar navbar-expand-sm navbar-custom navbar-light">
 		<!-- Brand/logo -->
 		<a class="navbar-brand custom" href="{% url 'feed:userfeed' %}"><h5>HortiHub</h5></a>
 		<!-- Links -->
 		{% if user.is_authenticated %}
-		<ul class="navbar-nav ml-auto">
-			<li class="nav-item">
-				<a class="nav-link active" href="{% url 'feed:userfeed' %}">Home</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link active" href="{% url 'accounts:users_list' %}">Users</a>
-			</li>
-			<!--<li class="nav-item">-->
-				<!--<a class="nav-link active" href="{% url 'accounts:editprof' user.pk %}">Profile</a>-->
-			<!--</li>-->
-			<li class="nav-item">
-				<a class="nav-link active" href="{{ user.get_absolute_url }}">Profile</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link active" href="#">Notifications</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link active" href="{% url 'logout' %}">logout</a>
-			</li>
-		</ul>
+		 <!-- Toggler/collapsibe Button -->
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"><span class="navbar-toggler-icon"></span>
+	  </button>
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link active" href="{% url 'feed:userfeed' %}">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="{% url 'accounts:users_list' %}">Users</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="{{ user.get_absolute_url }}">Profile</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="#">Notifications</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="{% url 'logout' %}">logout</a>
+				</li>
+			</ul>
+		</div>
 		{% endif %}
+		
 	</nav>
 </div>
 
