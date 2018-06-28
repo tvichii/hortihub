@@ -15,19 +15,27 @@
 				{% endif %}
 				
 				<div class="post-footer">
+				<div class=" card-block">
 					<div class="row countline">
-						<div class="col-md-6">
-			<span class="text-center count">
-				Likes: <span id="likes">{{ post.likes.count }}</span>
-				</span>
+						<div class="col-sm-3 col-md-4">
+							<span class="text-center count float-left">
+								Likes: <span id="likes">{{ post.likes.count }}</span>
+							</span>
 						</div>
-						<div class="col-md-6">
-			<span class="text-center count">
-				view{{ total_views|pluralize }}:
-				<span>{{ total_views }}</span>
-			</span>
+						<div class="col-sm-3 col-md-4 text-center" >
+							<span class="text-center count ">
+								Comment{{ post.comments.count |pluralize }}:
+								<span>{{ post.comments.count }}</span>
+							</span>
+						</div>
+						<div class="col-sm-3 col-md-4">
+							<span class="text-center count float-right">
+								View{{ total_views|pluralize }}:
+								<span>{{ total_views }}</span>
+							</span>
 						</div>
 					</div>
+				</div>
 					<a class="button" data-href="{{ post.get_absolute_url }}">
 						<div>
 							{% if request.user not in post.likes.all %}
@@ -55,31 +63,35 @@
 						<blockquote>
 							<div class="media-body">
 								<p class="mt-0">{{ comment.content }}</p>
-								<footer class="blockquote-footer">{{ comment.user }} | {{ comment.timestamp|timesince }} ago | <a class='comment-reply-btn' href='#'>Reply</a>
+								<footer class="blockquote-footer">{{ comment.user }} | {{ comment.timestamp|timesince }} ago | {{comment.children.count }} repl{{ comment.children.count|pluralize:"y,ies" }}: | <a
+											class='comment-reply-btn' href=''>Thread</a> | <a class='comment-reply-btn' href='#'>Reply</a>
 								</footer>
-								<div class='comment-reply'>
+								<div class='comment-reply' style="display:none;">
 									{% for child_comment in comment.children %}
 									<blockquote>
-										<div class="media  mt-{{ forloop.counter|add:'2' }}">
-											<a class="pr-{{ forloop.counter|add:'2' }}" href="#">
+										<!--<div class="media  mt-{{ forloop.counter|add:'2' }}">-->
+										<!--<a class="pr-{{ forloop.counter|add:'2' }}" href="#">-->
+										<div class="media  mt-3">
+											<a class="pr-3">
 											</a>
 											<div class="media-body">
 												<p>{{ child_comment.content }}</p>
-												<footer class="blockquote-footer"> {{ child_comment.user }} | {{ child_comment.timestamp|timesince}} ago
+												<footer class="blockquote-footer"> {{ child_comment.user }} | {{
+													child_comment.timestamp|timesince}} ago
 												</footer>
 											</div>
 										</div>
 									</blockquote>
 									{% endfor %}
-								
-								<form method="post" action="" enctype='multipart/form-data'>
-									{% csrf_token %}
-									<!--{{ form_comment }}-->
-									{% include 'feed/form-template.html' %}
-									<input type='hidden' name='parent_id' value='{{ comment.pk }}'>
-									<input type='submit' value='Reply' class='btn btn-default float-right'>
-								</form>
-									</div>
+									
+									<form method="post" action="" enctype='multipart/form-data'>
+										{% csrf_token %}
+										<!--{{ form_comment }}-->
+										{% include 'feed/form-template.html' %}
+										<input type='hidden' name='parent_id' value='{{ comment.pk }}'>
+										<input type='submit' value='Reply' class='btn btn-default float-right'>
+									</form>
+								</div>
 								<hr/>
 							</div>
 						</blockquote>

@@ -10,6 +10,7 @@ from django.http.response import HttpResponse
 import json
 from comments.forms import CommentForm
 from comments.models import Comment
+from .forms import UserPostForm
 
 r = redis.StrictRedis(host=settings.REDIS_HOST,
                       port=settings.REDIS_PORT,
@@ -18,7 +19,7 @@ r = redis.StrictRedis(host=settings.REDIS_HOST,
 
 class CreatePostView(CreateView):
     model = UserPost
-    fields = ['post_body', 'image']
+    form_class = UserPostForm
 
     def get_context_data(self, **kwargs):
         kwargs['actions'] = Action.objects.all()

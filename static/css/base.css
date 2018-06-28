@@ -105,13 +105,13 @@ width:400px;
 }*/
 
 .count {
-    width:140px;
-    color:#aaa;
-     border:2px solid #bbb;
- border-radius:26px;
- padding:3px 0px;
- margin:5px 0px;
- display: inline-block;
+         /*width:100px;*/
+         color:#aaa;
+         /*border:2px solid #bbb;
+         /*border-radius:26px;
+         padding:3px 5px;
+         /*margin:5px 0px;
+         display: inline-block;*/
 }
 .countline{
  margin:10px 0px;
