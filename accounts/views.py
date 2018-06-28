@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
@@ -10,8 +10,6 @@ from django.views.generic import View
 from django.core.exceptions import ObjectDoesNotExist
 from actions.utils import create_action
 
-
-# from actions.utils import create_action
 
 class SignUp(generic.CreateView):
     form_class = UserCreationForm
@@ -75,28 +73,6 @@ class UserUpdate(View):
         return render(request, self.template_name1)
 
 
-# @ajax_required
-# @require_POST
-# def user_follow(request):
-#     user_id = request.POST.get('id')
-#     action = request.POST.get('action')
-#     if user_id and action:
-#         try:
-#             user = User.objects.get(id=user_id)
-#             if action == 'follow':
-#                 Contact.objects.get_or_create(user_from=request.user,
-#                                               user_to=user)
-#                 create_action(request.user, 'is following', user)
-#             else:
-#                 Contact.objects.filter(user_from=request.user,
-#                                        user_to=user).delete()
-#             return JsonResponse({'status':'ok'})
-#         except User.DoesNotExist:
-#             return JsonResponse({'status':'ko'})
-#     return JsonResponse({'status':'ko'})
-
-# @ajax_required
-# @require_POST
 class UserFollow(generic.RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         pk = self.kwargs.get('pk')
@@ -114,78 +90,3 @@ class UserFollow(generic.RedirectView):
                 create_action(self.request.user, 'is following', celeb)
         return url_
 
-
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
-# from rest_framework import authentication, permissions
-#
-#
-# class UserFollowAPIToggle(APIView):
-#     authentication_classes = (authentication.SessionAuthentication,)
-#     permission_classes = (permissions.IsAuthenticated,)
-#
-#     def get(self, request, pk=None, format=None):
-#
-#         pk = self.kwargs.get('pk')
-#
-#         celeb = get_object_or_404(User, pk=pk)
-#         # url_ = celeb.get_absolute_url()
-#         updated = False
-#         followed = False
-#         if self.request.user.is_authenticated:
-#             if self.request.user in celeb.followers.all():
-#                 Contact.objects.filter(user_from=self.request.user,
-#                                        user_to=celeb).delete()
-#                 followed = "False_y"
-#             else:
-#                 followed = True
-#                 Contact.objects.get_or_create(user_from=self.request.user,
-#                                               user_to=celeb)
-#             updated = True
-#         data = {
-#             "updated": updated,
-#             "followed": followed
-#         }
-#         return Response(data)
-
-        # obj = get_object_or_404(Post, slug=slug)
-        # url_ = obj.get_absolute_url()
-        # user = self.request.user
-        # updated = False
-        # liked = False
-        # if user.is_authenticated():
-        #     if user in obj.likes.all():
-        #         liked = False
-        #         obj.likes.remove(user)
-        #     else:
-        #
-        #
-        #         obj.likes.add(user)
-        #     updated = True
-        # data = {
-        #     "updated": updated,
-        #     "liked": liked
-        # }
-        # return Response(data)
-
-
-        # def post(self, request, pk):
-        #     # user = User.objects.get(pk=pk)
-        #     user_id = request.POST.get('id')
-        #     print(user_id)
-        #     action = request.POST.get('action')
-        #
-        #     if user_id and action:
-        #         try:
-        #             user = User.objects.get(id=user_id)
-        #             if action == 'follow':
-        #                 Contact.objects.get_or_create(user_from=request.user,
-        #                                               user_to=user)
-        #                 # create_action(request.user, 'is following', user)
-        #             else:
-        #                 Contact.objects.filter(user_from=request.user,
-        #                                        user_to=user).delete()
-        #             return JsonResponse({'status': 'ok'})
-        #         except User.DoesNotExist:
-        #             return JsonResponse({'status': 'ko'})
-        #     return JsonResponse({'status': 'ko'})

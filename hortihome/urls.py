@@ -6,5 +6,4 @@ app_name = 'hortihome'
 
 urlpatterns = [
 url(r'^$', views.HomeView.as_view(), name='home'),
-    # url(r'^$', auth_views.login, name='login'),
 ]

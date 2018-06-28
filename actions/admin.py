@@ -7,4 +7,5 @@ class ActionAdmin(admin.ModelAdmin):
     list_filter = ('created',)
     search_fields = ('verb',)
 
+
 admin.site.register(Action, ActionAdmin)

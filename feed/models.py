@@ -1,11 +1,11 @@
 from django.db import models
-# from django.core.urlresolvers import reverse
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 from comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 
 User = get_user_model()
+
 
 class UserPost(models.Model):
     author = models.ForeignKey(User, related_name='userpost', null=True, on_delete=models.CASCADE)

@@ -1,20 +1,20 @@
 from actions.models import Action
-from django.views.generic import (DetailView, CreateView, UpdateView)
+from django.views.generic import (CreateView, UpdateView)
 from feed.models import UserPost
 from django.urls import reverse_lazy
 from actions.utils import create_action
 import redis
 from django.conf import settings
-from braces.views import JSONResponseMixin, AjaxResponseMixin
+from braces.views import AjaxResponseMixin
 from django.http.response import HttpResponse
 import json
 from comments.forms import CommentForm
-from django.contrib.contenttypes.models import ContentType
 from comments.models import Comment
 
 r = redis.StrictRedis(host=settings.REDIS_HOST,
                       port=settings.REDIS_PORT,
                       db=settings.REDIS_DB)
+
 
 class CreatePostView(CreateView):
     model = UserPost
@@ -55,7 +55,7 @@ class PostDetailView(AjaxResponseMixin, UpdateView):
     def get_context_data(self, **kwargs):
         # comment_form = CommentForm
         context = super(PostDetailView, self).get_context_data(**kwargs)
-        kwargs['form_comment'] = context['form']#comment_form
+        kwargs['form_comment'] = context['form']  # comment_form
         try:
             total_views = r.incr('userpost:{}:views'.format(self.object.pk))
             kwargs['total_views'] = total_views
@@ -94,7 +94,7 @@ class PostDetailView(AjaxResponseMixin, UpdateView):
             content_type=c_type,
             object_id=obj_id,
             content=content_data,
-            parent = parent_obj,
+            parent=parent_obj,
         )
         print(created)
         return super(PostDetailView, self).form_valid(form)
@@ -120,4 +120,3 @@ class PostDetailView(AjaxResponseMixin, UpdateView):
 
         return HttpResponse(json.dumps(response_data),
                             content_type="application/json")
-

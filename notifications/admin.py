@@ -7,5 +7,6 @@ class NotificationAdmin(admin.ModelAdmin):
     list_filter = ('timestamp',)
     search_fields = ('verb',)
 
+
 admin.site.register(Notification, NotificationAdmin)
 
