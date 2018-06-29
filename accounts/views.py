@@ -36,15 +36,11 @@ class UserDetail(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(UserDetail, self).get_context_data(**kwargs)
         pk = self.kwargs.get('pk')
-        hi = UserPost.objects.filter(author=User.objects.get(pk=pk))
         try:
             context['profile'] = Profile.objects.filter(user=User.objects.get(pk=pk))
-            hi = UserPost.objects.filter(author=User.objects.get(pk=pk))
             context['user_posts'] = UserPost.objects.filter(author=User.objects.get(pk=pk))
         except ObjectDoesNotExist:
             pass
-        print(hi)
-        print("hell")
         return context
 
 
@@ -93,6 +89,6 @@ class UserFollow(generic.RedirectView):
             else:
                 Contact.objects.get_or_create(user_from=self.request.user,
                                               user_to=celeb)
-                create_action(self.request.user, 'is following', celeb)
+                create_action(self.request.user, 'is now following', celeb)
         return url_
 

@@ -11,6 +11,7 @@ import json
 from comments.forms import CommentForm
 from comments.models import Comment
 from .forms import UserPostForm
+from django.contrib.contenttypes.models import ContentType
 
 r = redis.StrictRedis(host=settings.REDIS_HOST,
                       port=settings.REDIS_PORT,
@@ -38,7 +39,6 @@ class CreatePostView(CreateView):
 
 class PostDetailView(AjaxResponseMixin, UpdateView):
     model = UserPost
-    # fields = ['post_body', 'image']
     context_object_name = 'post'
     template_name = 'feed/post_detail.html'
     form_class = CommentForm
@@ -97,7 +97,10 @@ class PostDetailView(AjaxResponseMixin, UpdateView):
             content=content_data,
             parent=parent_obj,
         )
-        print(created)
+        if created:
+            ct = ContentType.objects.get_for_id(c_type.id)
+            obj = ct.get_object_for_this_type(pk=obj_id)
+            create_action(self.request.user, 'commented on', obj)
         return super(PostDetailView, self).form_valid(form)
 
     def form_invalid(self, form):
