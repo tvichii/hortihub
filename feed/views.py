@@ -46,7 +46,6 @@ class PostDetailView(AjaxResponseMixin, UpdateView):
     def get_initial(self):
         initial_data = super(PostDetailView, self).get_initial()
         obj = self.get_object()
-        print(obj.get_content_type)
         initial_data.update({
             "content_type": obj.get_content_type,
             "object_id": obj.id
@@ -83,7 +82,6 @@ class PostDetailView(AjaxResponseMixin, UpdateView):
             parent_id = int(self.request.POST.get("parent_id"))
         except:
             parent_id = None
-        print(parent_id)
 
         if parent_id:
             parent_qs = Comment.objects.filter(pk=parent_id)

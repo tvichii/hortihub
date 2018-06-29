@@ -37,9 +37,6 @@ STATICFILES_DIRS = [
 #     os.path.normpath(BASE_DIR, 'static'),
 # ]
 
-SOCIAL_AUTH_GITHUB_KEY = '5a1923402861bda4eb93'
-SOCIAL_AUTH_GITHUB_SECRET = 'ce9ae60d506f24914b473cb05cbb12ef8803b41a'
-
 
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379

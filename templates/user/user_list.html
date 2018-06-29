@@ -4,15 +4,15 @@
 {% block title %}People{% endblock %}
 
 {% block body %}
-    <h1>People</h1>
+    <h1>Network</h1>
     <div id="people-list">
         {% for user in users %}
-            <div class="user">
+            <div class="user   text-center">
                 <a href="{{ user.get_absolute_url }}">
                     {% avatar user %}
                 </a>
                 <div class="info">
-                    <a href="{{ user.get_absolute_url }}">{{ user.get_full_name }}</a>
+                    <a href="{{ user.get_absolute_url }}">{{ user.username }}</a>
                 </div>
             </div>
         {% endfor %}
