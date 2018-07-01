@@ -64,17 +64,18 @@ class UserUpdate(View):
     def post(self, request, pk):
         user = User.objects.get(pk=pk)
         form = self.form_class_user(data=request.POST, instance=request.user)
+        if request.user:
+            prof_instance = request.user.profile
+        else:
+            prof_instance = None
+
         try:
-            form2 = self.form_class_profile(data=request.POST, files=request.FILES, instance=request.user.profile)
+            # Creates new instance of profile or uses existing one to save user profile data
+            form2 = self.form_class_profile(data=request.POST, files=request.FILES, instance=prof_instance)
             if form2.is_valid():
                 user.profile = form2.save(commit=False)
                 user.profile.save()
         except ObjectDoesNotExist:
-            #Creates new instance of profile to save user profile data
-            form2 = self.form_class_profile(data=request.POST, files=request.FILES)
-            if form2.is_valid():
-                user.profile = form2.save(commit=False)
-                user.profile.save()
             pass
 
         if form.is_valid():
