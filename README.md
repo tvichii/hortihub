@@ -9,7 +9,7 @@ The project has four basic apps:
 * Feed (Feed like fb or twitter)
 * comments(Comment feature)
 
-##Technology Stack
+## Technology Stack
 
 * Python 3.6
 * Django > 2

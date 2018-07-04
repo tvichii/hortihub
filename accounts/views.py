@@ -10,6 +10,7 @@ from django.views.generic import View
 from django.core.exceptions import ObjectDoesNotExist
 from actions.utils import create_action
 from feed.models import UserPost
+from django.shortcuts import redirect
 
 
 class SignUp(generic.CreateView):
@@ -46,7 +47,7 @@ class UserDetail(generic.DetailView):
 
 class UserUpdate(View):
     template_name = 'registration/profile.html'
-    template_name1 = 'hortihome/base.html'
+    # template_name1 = 'hortihome/base.html'
     form_class_user = UserForm
     form_class_profile = ProfileForm
 
@@ -65,13 +66,10 @@ class UserUpdate(View):
         user = User.objects.get(pk=pk)
         form = self.form_class_user(data=request.POST, instance=request.user)
 
-        # if request.user:
         try:
             prof_instance = request.user.profile
         except ObjectDoesNotExist:
             prof_instance = None
-        # else:
-        #     prof_instance = None
 
         try:
             # Creates new instance of profile or uses existing one to save user profile data
@@ -89,7 +87,7 @@ class UserUpdate(View):
             except:
                 pass
 
-        return render(request, self.template_name1)
+        return redirect(reverse_lazy('accounts:userdetail', kwargs={'pk': user.pk}))
 
 
 class UserFollow(generic.RedirectView):
