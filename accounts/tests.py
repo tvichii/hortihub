@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.models import User
 from .forms import UserForm, ProfileForm
+import datetime
 
 
 class SignUpTests(TestCase):
@@ -34,4 +35,11 @@ class UserUpdateViewTests(TestCase):
         response = self.client.get(reverse_lazy('accounts:editprof', kwargs={'pk': user.pk}))
         self.assertEquals(response.status_code, 200,  'user doesnt exist with pk={}'.format(user.pk))
         self.assertTemplateUsed(response, 'registration/profile.html')
+        login = self.client.login(username='chitra', password='passowrd123')
+        valid_date_in_future = datetime.date.today() + datetime.timedelta(weeks=2)
+        resp = self.client.post(reverse_lazy('accounts:editprof', kwargs={'pk': user.pk}),
+                                {'date_of_birth': valid_date_in_future})
+        self.assertEqual(resp.status_code, 200)
+        # self.assertEqual(resp.status_code, 200)
+        # self.assertRedirects(resp, reverse_lazy('home'))
 

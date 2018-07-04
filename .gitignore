@@ -141,3 +141,4 @@ venv.bak/
 # env file
 .env
 staticfiles/
+_site/

@@ -64,10 +64,14 @@ class UserUpdate(View):
     def post(self, request, pk):
         user = User.objects.get(pk=pk)
         form = self.form_class_user(data=request.POST, instance=request.user)
-        if request.user:
+
+        # if request.user:
+        try:
             prof_instance = request.user.profile
-        else:
+        except ObjectDoesNotExist:
             prof_instance = None
+        # else:
+        #     prof_instance = None
 
         try:
             # Creates new instance of profile or uses existing one to save user profile data
