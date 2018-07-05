@@ -75,6 +75,7 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+htmlcov/
 
 # Translations
 *.mo
@@ -82,8 +83,6 @@ coverage.xml
 
 # Django stuff:
 *.log
-local_settings.py
-db.sqlite3
 
 # Flask stuff:
 instance/
@@ -138,8 +137,11 @@ __pycache__
 # SQLite database files
 
 *.sqlite3
+migrations/
+db.sqlite3
 
 # env file
 .env
 staticfiles/
 _site/
+
