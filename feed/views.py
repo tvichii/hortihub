@@ -43,14 +43,14 @@ class PostDetailView(AjaxResponseMixin, UpdateView):
     template_name = 'feed/post_detail.html'
     form_class = CommentForm
 
-    def get_initial(self):
-        initial_data = super(PostDetailView, self).get_initial()
-        obj = self.get_object()
-        initial_data.update({
-            "content_type": obj.get_content_type,
-            "object_id": obj.id
-        })
-        return initial_data
+    # def get_initial(self):
+    #     initial_data = super(PostDetailView, self).get_initial()
+    #     obj = self.get_object()
+    #     initial_data.update({
+    #         "content_type": obj.get_content_type,
+    #         "object_id": obj.id
+    #     })
+    #     return initial_data
 
     def get_context_data(self, **kwargs):
         # comment_form = CommentForm
@@ -74,10 +74,14 @@ class PostDetailView(AjaxResponseMixin, UpdateView):
         return reverse_lazy('feed:post_detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
-        c_type = form.cleaned_data.get("content_type")
-        obj_id = form.cleaned_data.get('object_id')
+        # c_type = form.cleaned_data.get("content_type")
+        # obj_id = form.cleaned_data.get('object_id')
         content_data = form.cleaned_data.get("content")
         parent_obj = None
+
+        obj = self.get_object()
+        c_type = obj.get_content_type
+        obj_id = obj.id
         try:
             parent_id = int(self.request.POST.get("parent_id"))
         except:
@@ -103,6 +107,8 @@ class PostDetailView(AjaxResponseMixin, UpdateView):
 
     def form_invalid(self, form):
         print("invalid form")
+        response = super().form_invalid(form)
+        return response
 
     def post_ajax(self, request, *args, **kwargs):
         obj = self.get_object()
