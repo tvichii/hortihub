@@ -24,7 +24,7 @@ hyperlink==18.0.0
 idna==2.6
 incremental==17.5.0
 oauthlib==2.1.0
-Pillow==5.0.0
+Pillow==6.2.0
 psycopg2==2.7.5
 PyJWT==1.6.4
 python-decouple==3.1
