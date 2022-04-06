@@ -38,7 +38,7 @@ six==1.11.0
 social-auth-app-django==2.1.0
 social-auth-core==1.7.0
 sqlparse==0.2.4
-Twisted==18.4.0
+Twisted==21.2.0
 txaio==2.10.0
 urllib3==1.22
 whitenoise==3.3.1
